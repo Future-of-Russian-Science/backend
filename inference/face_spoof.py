@@ -36,7 +36,7 @@ class SpoofDetector:
             self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
         # path to current dir
-        self.basement = Path(__file__).parent.parent.absolute() / 'new_model'
+        self.basement = Path(__file__).parent.parent.absolute() / 'models'
         self.model_path = self.basement / model.value
 
         self.model = MobileSpoofNet()
