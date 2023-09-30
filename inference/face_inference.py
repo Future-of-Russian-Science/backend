@@ -2,6 +2,7 @@ from inference.face_detect import FaceDetector
 from inference.face_spoof import SpoofDetector, Models
 import torch
 from enum import Enum
+import cv2
 
 
 class Response(str, Enum):
@@ -22,6 +23,18 @@ class FaceInference:
 
         if face is None:
             return Response.no_face
+
+        faces_count, face_idx = face
+
+        if face_idx == 1:
+            filename = 'face.jpg'
+        else:
+            filename = f'face_{face_idx}.jpg'
+
+        print(filename)
+
+        face = cv2.imread(filename)
+        face = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
 
         prediction = self.spoof_detector.predict(face)
 

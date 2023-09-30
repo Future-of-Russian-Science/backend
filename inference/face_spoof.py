@@ -5,13 +5,14 @@ from pathlib import Path
 
 
 class Models(str, Enum):
-    mobilenet_v3_large_facial = "mobile_spoof_net_v3_1.pt"
+    mobilenet_v3_large_facial_1 = "mobile_spoof_net_v3_1.pt"
+    mobilenet_v3_large_facial_2 = "mobile_spoof_net_v3_1_2.pt"
 
 
 class MobileSpoofNet(torch.nn.Module):
     def __init__(self, num_classes=2):
         super(MobileSpoofNet, self).__init__()
-        self.model = models.mobilenet_v3_large()
+        self.model = models.mobilenet_v3_large(pretrained=True)
         self.model.classifier[-1] = torch.nn.Linear(1280, num_classes)
 
         # add regularization
@@ -35,7 +36,7 @@ class SpoofDetector:
             self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
         # path to current dir
-        self.basement = Path(__file__).parent.parent.absolute() / 'models'
+        self.basement = Path(__file__).parent.parent.absolute() / 'new_model'
         self.model_path = self.basement / model.value
 
         self.model = MobileSpoofNet()
@@ -45,7 +46,7 @@ class SpoofDetector:
     def transform(self, frame):
         transform = transforms.Compose([
             transforms.ToPILImage(),
-            # transforms.Resize((224, 224)),
+            transforms.Resize((224, 224)),
             transforms.ToTensor(),
             transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         ])
@@ -67,3 +68,4 @@ class SpoofDetector:
         print(prediction)
 
         return prediction
+

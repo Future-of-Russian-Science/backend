@@ -2,7 +2,7 @@ from inference.face_inference import FaceInference, Models, Response
 from message import Error, Success
 from copy import deepcopy
 
-infer = FaceInference(device='cpu', model=Models.mobilenet_v3_large_facial)
+infer = FaceInference(device='cuda:1', model=Models.mobilenet_v3_large_facial_2)
 
 
 def get_response(path: str, _id: int):

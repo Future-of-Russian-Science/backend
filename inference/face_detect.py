@@ -8,7 +8,8 @@ class FaceDetector:
         if self.device is None:
             self.device = 'cpu'
 
-        self.mtcnn = MTCNN(image_size=224, margin=40, keep_all=True, device=device, min_face_size=100)
+        self.mtcnn = MTCNN(image_size=224, margin=20, keep_all=True, device=device, min_face_size=100,
+                           thresholds=[0.95, 0.95, 0.95])
 
     def load_image(self, filepath):
         # Load image
@@ -17,24 +18,26 @@ class FaceDetector:
         # Convert to RGB
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-        # flip
-        frame = cv2.flip(frame, 1)
-
         return frame
 
     def get_face(self, frame):
         # Detect faces
-        boxes, probs, points = self.mtcnn.detect(frame, landmarks=True)
+        try:
+            boxes, probs, points = self.mtcnn.detect(frame, landmarks=True)
+        except:
+            return None
 
-        faces = self.mtcnn.extract(frame, boxes, save_path=None)
+        faces = self.mtcnn.extract(frame, boxes, save_path='face.jpg')
 
         if faces is None:
             return None
 
-        # get bigger face and crop it
-        face = faces[0]
-        for i in range(len(faces)):
-            if faces[i].shape[0] > face.shape[0]:
-                face = faces[i]
+        all_faces = len(faces)
 
-        return face
+        # get bigger face and crop it
+        face = (faces[0], 1)
+        for i in range(len(faces)):
+            if faces[i].shape[0] > face[0].shape[0]:
+                face = (faces[i], i + 1)
+
+        return all_faces, face[1]
