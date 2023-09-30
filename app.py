@@ -1,6 +1,7 @@
 import os
 from message import Error
 from flask import Flask, jsonify, request
+from flask_cors import CORS, cross_origin
 from werkzeug.utils import secure_filename
 from mock import mock
 from datetime import datetime
@@ -9,6 +10,8 @@ UPLOAD_FOLDER = 'static'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def allowed_file(filename):
@@ -19,6 +22,7 @@ def set_name(filename):
     return str(datetime.now())[:-7] + f'.{format}'
 
 @app.route('/api/check', methods=['POST'])
+@cross_origin()
 def upload_file():
     if 'file' not in request.files:
         return jsonify(Error.IncorrectParameter)
