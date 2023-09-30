@@ -32,4 +32,3 @@ def upload_file():
         filename = secure_filename(set_name(file.filename))
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         return jsonify(mock(file))
-
