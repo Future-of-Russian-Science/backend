@@ -4,7 +4,7 @@ from message import Error
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from werkzeug.utils import secure_filename
-from mock import mock
+from model import get_response
 from datetime import datetime
 
 UPLOAD_FOLDER = 'static'
@@ -15,12 +15,16 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 def set_name(filename):
-    format = filename.split(".")[1]
-    return str(datetime.now())[:-7] + f'.{format}'
+    _format = filename.split(".")[1]
+    return str(datetime.now())[:-7] + f'.{_format}'
+
 
 @app.route('/api/check', methods=['POST'])
 @cross_origin()
@@ -38,6 +42,6 @@ def upload_file():
 
             path = PurePath(__file__).parent.joinpath(f"static/{filename}")
 
-            response.append(mock(path, photo[4:]))
+            response.append(get_response(str(path), photo[4:]))
 
     return jsonify(response)
