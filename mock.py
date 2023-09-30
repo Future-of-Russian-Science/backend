@@ -1,7 +1,7 @@
 from message import Error, Success
 from copy import deepcopy
 import random
-def mock(dir, id):
+def mock(path, id):
     x = random.randint(1,3)
 
     match x:

@@ -1,4 +1,5 @@
 import os
+from pathlib import PurePath
 from message import Error
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
@@ -35,5 +36,8 @@ def upload_file():
             filename = secure_filename(set_name(file.filename))
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-            response.append(mock(f'static/{filename}', photo[4:]))
+            path = PurePath(__file__).parent.joinpath(f"static/{filename}")
+
+            response.append(mock(path, photo[4:]))
+
     return jsonify(response)
