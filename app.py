@@ -24,15 +24,16 @@ def set_name(filename):
 @app.route('/api/check', methods=['POST'])
 @cross_origin()
 def upload_file():
-    if 'file' not in request.files:
+    queue = list(request.files)
+    response = []
+
+    if queue == 0:
         return jsonify(Error.IncorrectParameter)
+    else:
+        for photo in queue:
+            file = request.files[photo]
+            filename = secure_filename(set_name(file.filename))
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-    file = request.files['file']
-
-    if file.filename == '':
-        return jsonify(Error.FileNotUploaded)
-
-    if file and allowed_file(file.filename):
-        filename = secure_filename(set_name(file.filename))
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return jsonify(mock(file))
+            response.append(mock(f'static/{filename}', photo[4:]))
+    return jsonify(response)

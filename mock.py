@@ -1,12 +1,19 @@
 from message import Error, Success
+from copy import deepcopy
 import random
-def mock(image):
+def mock(dir, id):
     x = random.randint(1,3)
 
     match x:
         case 1:
-            return Error.NoFace
+            res = deepcopy(Error.NoFace)
+            res['id'] = id
+            return res
         case 2:
-            return Error.FakeFace
+            res = deepcopy(Error.FakeFace)
+            res['id'] = id
+            return res
         case 3:
-            return Success.LiveFace
+            res = deepcopy(Success.LiveFace)
+            res['id'] = id
+            return res
