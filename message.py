@@ -20,6 +20,7 @@ class Error():
         "Message": "No face found in the photo"
     }
 
+
 class Success():
     LiveFace = {
         "Status": "Ok",

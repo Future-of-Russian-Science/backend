@@ -2,7 +2,6 @@ from inference.face_detect import FaceDetector
 from inference.face_spoof import SpoofDetector, Models
 import torch
 from enum import Enum
-import cv2
 
 
 class Response(str, Enum):

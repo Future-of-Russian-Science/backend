@@ -67,4 +67,3 @@ class SpoofDetector:
         print(prediction)
 
         return prediction
-

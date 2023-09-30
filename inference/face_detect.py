@@ -38,4 +38,3 @@ class FaceDetector:
                 face = faces[i]
 
         return face
-
