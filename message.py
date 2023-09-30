@@ -16,12 +16,12 @@ class Error():
         "Message": "Fake face on picture"
     }
     NoFace = {
-        "Status": "Failed",
+        "Status": "Empty",
         "Message": "No face found in the photo"
     }
 
 class Success():
     LiveFace = {
-        "Status": "ok",
+        "Status": "Ok",
         "Message": "Success, live face"
     }
