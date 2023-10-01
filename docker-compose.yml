@@ -8,6 +8,9 @@ services:
       - "8888:8888"
     volumes:
       - .:/backend
+    environment:
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics
+      - NVIDIA_VISIBLE_DEVICES=all
     deploy:
       resources:
         limits:
