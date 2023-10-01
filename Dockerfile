@@ -15,10 +15,9 @@ RUN apt update && apt install -y build-essential wget unzip && apt install -y --
     libegl1-mesa-dev \
     libgles2-mesa-dev \
     cmake \
-    curl \
     libsm6 \
     libxext6 \
-    libxrender-dev < 1 && rm -rf /var/lib/apt/lists/*
+    libxrender-dev && rm -rf /var/lib/apt/lists/*
 
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility,graphics
