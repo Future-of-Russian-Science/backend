@@ -4,7 +4,6 @@ WORKDIR /backend
 COPY . .
 
 RUN apt update && apt install -y build-essential wget unzip apt-utils && apt install -y --no-install-recommends \
-    pkg-config \
     libglvnd0 \
     libgl1 \
     libglx0 \
