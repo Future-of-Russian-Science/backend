@@ -18,7 +18,7 @@ RUN apt update && apt install -y build-essential wget unzip && apt install -y --
     curl \
     libsm6 \
     libxext6 \
-    libxrender-dev && rm -rf /var/lib/apt/lists/*
+    libxrender-dev < 1 && rm -rf /var/lib/apt/lists/*
 
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility,graphics
