@@ -3,7 +3,7 @@ FROM pytorch/pytorch:2.0.1-cuda11.7-cudnn8-devel
 WORKDIR /backend
 COPY . .
 
-RUN apt update && apt install -y build-essential wget unzip && apt install -y --no-install-recommends \
+RUN apt update && apt install -y build-essential wget unzip apt-utils && apt install -y --no-install-recommends \
     pkg-config \
     libglvnd0 \
     libgl1 \
