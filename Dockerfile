@@ -6,7 +6,22 @@ RUN nvidia-smi
 WORKDIR /backend
 COPY . .
 
-RUN apt update && apt install -y build-essential wget
+RUN apt update && apt install -y build-essential wget unzip && apt install -y --no-install-recommends \
+    pkg-config \
+    libglvnd0 \
+    libgl1 \
+    libglx0 \
+    libegl1 \
+    libgles2 \
+    libglvnd-dev \
+    libgl1-mesa-dev \
+    libegl1-mesa-dev \
+    libgles2-mesa-dev \
+    cmake \
+    curl \
+    libsm6 \
+    libxext6 \
+    libxrender-dev && rm -rf /var/lib/apt/lists/*
 
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility,graphics
